@@ -117,7 +117,7 @@ function saveSettings() {
 // Переключение вкладок
 function switchTab(tabName) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector([data-tab=`${tabName}`]).classList.add('active');
+  document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
   document.querySelectorAll('.list-container').forEach(l => l.classList.remove('active'));
   document.getElementById(`${tabName}List`).classList.add('active');
 }
@@ -126,7 +126,7 @@ async function loadData() {
   try {
     const response = await fetch(`https://api.github.com/gists/${state.gistId}`, {
     headers: {
-      'Authorization': token ${state.token},
+      'Authorization': `token ${state.token}`,
       'Accept': 'application/vnd.github.v3+json'
     }
     });
@@ -156,7 +156,7 @@ async function saveData() {
     const response = await fetch(`https://api.github.com/gists/${state.gistId}`, {
       method: 'PATCH',
       headers: {
-        'Authorization': token ${state.token},
+        'Authorization': `token ${state.token}`,
         'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json'
       },
