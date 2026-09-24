@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Семейные списки</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏠 Семейные списки</h1>
+      <button id="settingsBtn" class="icon-btn" title="Настройки">⚙️</button>
+    </header>
+    <div id="setupScreen" class="screen">
+      <h2>Первичная настройка</h2>
+      <p>Для работы необходимо создать GitHub Gist и получить токен доступа.</p>
+        
+      <div class="setup-steps">
+        <div class="step">
+          <h3>1. Создайте Gist</h3>
+          <p>Перейдите на <a href="https://gist.github.com" target="_blank">gist.github.com</a> и создайте новый публичный Gist с именем файла <code>family_data.json</code> и содержимым <code>{}</code></p>
+        </div>
+          
+        <div class="step">
+          <h3>2. Получите токен</h3>
+          <p>Создайте Personal Access Token на <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> с правами <code>gist</code></p>
+        </div>
+          
+        <div class="step">
+          <h3>3. Введите данные</h3>
+          <div class="form-group">
+            <label>ID Gist'а:</label>
+            <input type="text" id="gistId" placeholder="Например: abc123def456">
+          </div>
+          <div class="form-group">
+            <label>GitHub Token:</label>
+            <input type="password" id="githubToken" placeholder="ghp_...">
+          </div>
+          <button id="saveSettings" class="btn primary">Сохранить и начать</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="mainScreen" class="screen hidden">
+      <div class="tabs">
+        <button class="tab active" data-tab="shopping">🛒 Покупки</button>
+        <button class="tab" data-tab="plans">📋 Планы</button>
+      </div>
+
+      <div id="shoppingList" class="list-container active">
+        <div class="list-header">
+          <h2>Список покупок</h2>
+          <button id="syncBtn" class="btn">🔄 Синхронизировать</button>
+        </div>
+        <div class="add-item">
+          <input type="text" id="newShoppingItem" placeholder="Добавить продукт...">
+          <button id="addShoppingItem" class="btn primary">+</button>
+        </div>
+        <ul id="shoppingItems" class="items-list"></ul>
+      </div>
+
+      <div id="plansList" class="list-container">
+        <div class="list-header">
+          <h2>Планы</h2>
+          <button id="syncPlansBtn" class="btn">🔄 Синхронизировать</button>
+        </div>
+        <div class="add-item">
+          <input type="text" id="newPlanItem" placeholder="Добавить план...">
+          <button id="addPlanItem" class="btn primary">+</button>
+        </div>
+        <ul id="planItems" class="items-list"></ul>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Настройки</h2>
+        <div class="form-group">
+          <label>ID Gist'а:</label>
+          <input type="text" id="editGistId">
+        </div>
+        <div class="form-group">
+          <label>GitHub Token:</label>
+          <input type="password" id="editToken">
+        </div>
+        <div class="modal-buttons">
+          <button id="saveSettingsModal" class="btn primary">Сохранить</button>
+          <button id="closeSettings" class="btn">Закрыть</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="notification" class="notification hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
