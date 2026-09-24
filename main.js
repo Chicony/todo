@@ -117,7 +117,7 @@ function saveSettings() {
 // Переключение вкладок
 function switchTab(tabName) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector([data-tab="${tabName}"]).classList.add('active');
+  document.querySelector([data-tab=`${tabName}`]).classList.add('active');
   document.querySelectorAll('.list-container').forEach(l => l.classList.remove('active'));
   document.getElementById(`${tabName}List`).classList.add('active');
 }
