@@ -153,7 +153,10 @@ async function loadData() {
 // Сохранение данных в Gist
 async function saveData() {
   try {
-    const response = await fetch(`https://api.github.com/gists/${state.gistId}`, {
+    const url = `https://api.github.com/gists/${state.gistId}`;
+    console.log("Попытка сохранения в:", url); // Отладка
+    
+    const response = await fetch(url, {
       method: 'PATCH',
       headers: {
         'Authorization': `token ${state.token}`,
@@ -168,8 +171,11 @@ async function saveData() {
         }
       })
     });
+    
     if (!response.ok) {
-      throw new Error('Ошибка сохранения данных');
+      const errorDetails = await response.text();
+      console.error("Детали ошибки от GitHub:", response.status, errorDetails);
+      throw new Error(`GitHub вернул ошибку ${response.status}. Проверьте ID Gist и токен.`);
     }
     
     showNotification('Данные сохранены');
