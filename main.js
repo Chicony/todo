@@ -139,7 +139,11 @@ async function loadData() {
     const file = gist.files['family_data.json'];
     
     if (file) {
-        state.data = JSON.parse(file.content);
+      const parsedData = JSON.parse(file.content);
+      state.data = {
+        shopping: Array.isArray(parsedData.shopping) ? parsedData.shopping : [],
+        plans: Array.isArray(parsedData.plans) ? parsedData.plans : []
+      };
     } else {
         state.data = { shopping: [], plans: [] };
     }
@@ -154,8 +158,7 @@ async function loadData() {
 async function saveData() {
   try {
     const url = `https://api.github.com/gists/${state.gistId}`;
-    console.log("Попытка сохранения в:", url); // Отладка
-    
+        
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
@@ -174,7 +177,6 @@ async function saveData() {
     
     if (!response.ok) {
       const errorDetails = await response.text();
-      console.error("Детали ошибки от GitHub:", response.status, errorDetails);
       throw new Error(`GitHub вернул ошибку ${response.status}. Проверьте ID Gist и токен.`);
     }
     
@@ -188,6 +190,11 @@ function addItem(type) {
   const input = document.getElementById(type === 'shopping' ? 'newShoppingItem' : 'newPlanItem');
   const text = input.value.trim();
   if (!text) return;
+
+  // Гарантируем, что массив для этого типа существует
+  if (!state.data[type]) {
+      state.data[type] = [];
+  }
 
   state.data[type].push({
       id: Date.now(),
